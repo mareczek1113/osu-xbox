@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="https://raw.githubusercontent.com/ppy/osu/master/assets/images/logo.png" width="100" alt="osu! logo">
+<img src="https://github.com/ppy/osu/blob/master/assets/lazer.png" width="100" alt="osu! logo">
 
 # osu! Xbox
 

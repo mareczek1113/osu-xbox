@@ -1,0 +1,30 @@
+# Build output
+bin/
+obj/
+publish/
+aot-full/
+aot-spike/
+aot-publish/
+aot-xbox-publish*/
+audio-spike/
+decoder-test/
+host-smoke/
+mixer-spike/
+mp3-debug/
+
+# Logs and temporary output
+*.log
+*-out.txt
+*-err.txt
+
+# Downloaded installers
+dotnet-install.ps1
+vs_BuildTools.exe
+
+# Local test data
+storage/
+
+# Nested Git repositories — handle separately
+osu/
+osu-framework/
+veldrid/

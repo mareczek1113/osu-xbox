@@ -1,16 +1,10 @@
 # Build output
-bin/
-obj/
-publish/
-aot-full/
-aot-spike/
+**/bin/
+**/obj/
+**/publish/
+**/out/
 aot-publish/
 aot-xbox-publish*/
-audio-spike/
-decoder-test/
-host-smoke/
-mixer-spike/
-mp3-debug/
 
 # Logs and temporary output
 *.log
@@ -24,7 +18,9 @@ vs_BuildTools.exe
 # Local test data
 storage/
 
-# Nested Git repositories — handle separately
-osu/
-osu-framework/
-veldrid/
+# Visual Studio and temporary files
+.vs/
+*.user
+*.suo
+
+aot-full/out-xbox/

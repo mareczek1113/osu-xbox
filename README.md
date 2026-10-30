@@ -6,7 +6,7 @@
 
 ### Bringing osu!lazer to Xbox Series S.
 
-An experimental community port exploring the feasibility of running
+An unofficial port exploring the feasibility of running
 osu!lazer on Xbox using UWP/GDK technologies.
 
 <br>
@@ -18,7 +18,7 @@ osu!lazer on Xbox using UWP/GDK technologies.
 
 <br>
 
-**An independent project exploring the technical challenges of bringing osu!lazer to Xbox.**
+**An independent project made for the osu! community, exploring the technical challenges of bringing osu!lazer to Xbox.**
 
 </div>
 
@@ -26,7 +26,7 @@ osu!lazer on Xbox using UWP/GDK technologies.
 
 ## 💗 About
 
-osu! Xbox is an experimental project exploring the possibility of running
+osu! Xbox is an independent project developed for the osu! community, exploring the possibility of running
 [osu!lazer](https://github.com/ppy/osu) on Xbox Series S.
 
 The project investigates the compatibility of osu!'s existing codebase with
@@ -145,8 +145,9 @@ project and third-party dependencies.
 - [ppy/osu](https://github.com/ppy/osu) — Open-source osu!lazer project.
 - [ppy/osu-framework](https://github.com/ppy/osu-framework) — Game framework.
 
-This project is independent and is not affiliated with or endorsed by
-ppy or the osu! development team.
+This project is independently developed for the osu! community and is not
+affiliated with, endorsed by, or officially supported by ppy or the osu!
+development team.
 
 ## 📄 Licence
 
@@ -161,6 +162,6 @@ See [LICENSE](LICENSE) for the licence applicable to this repository.
 
 **Made with 💗 for the osu! community.**
 
-*osu! Xbox — an experimental community project.*
+*osu! Xbox — an independent project by fans of osu!*
 
 </div>

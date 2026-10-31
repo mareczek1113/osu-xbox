@@ -1,4 +1,4 @@
-﻿// Copyright (c) ppy Pty Ltd <contact@ppy.sh>. Licensed under the MIT Licence.
+// Copyright (c) ppy Pty Ltd <contact@ppy.sh>. Licensed under the MIT Licence.
 // See the LICENCE file in the repository root for full licence text.
 
 #nullable disable
@@ -11,6 +11,10 @@ using System.Linq;
 using System.Threading;
 using JetBrains.Annotations;
 using ManagedBass;
+#if XBOX
+using osu.Framework.Audio.SDL;
+using DeviceInfo = osu.Framework.Audio.SDL.SDLDeviceInfo;
+#endif
 using ManagedBass.Fx;
 using ManagedBass.Mix;
 using osu.Framework.Audio.Mixing;
@@ -147,9 +151,13 @@ namespace osu.Framework.Audio
         /// </remarks>
         internal readonly IBindable<int?> GlobalMixerHandle = new Bindable<int?>();
 
+#if XBOX
+        public override bool IsLoaded => base.IsLoaded && SDLAudioOutput.IsInitialised;
+#else
         public override bool IsLoaded => base.IsLoaded &&
                                          // bass default device is a null device (-1), not the actual system default.
                                          Bass.CurrentDevice != Bass.DefaultDevice;
+#endif
 
         // Mutated by multiple threads, must be thread safe.
         private ImmutableArray<DeviceInfo> audioDevices = ImmutableArray<DeviceInfo>.Empty;
@@ -273,12 +281,21 @@ namespace osu.Framework.Audio
         public AudioMixer CreateAudioMixer(string identifier = null) =>
             createAudioMixer(SampleMixer, !string.IsNullOrEmpty(identifier) ? identifier : $"user #{Interlocked.Increment(ref userMixerID)}");
 
+#if XBOX
+        private AudioMixer createAudioMixer(AudioMixer fallbackMixer, string identifier)
+        {
+            var mixer = new SDLAudioMixer(fallbackMixer, identifier);
+            AddItem(mixer);
+            return mixer;
+        }
+#else
         private AudioMixer createAudioMixer(AudioMixer fallbackMixer, string identifier)
         {
             var mixer = new BassAudioMixer(this, fallbackMixer, identifier);
             AddItem(mixer);
             return mixer;
         }
+#endif
 
         protected override void ItemAdded(AudioComponent item)
         {
@@ -335,6 +352,15 @@ namespace osu.Framework.Audio
         /// (Re-)Initialises BASS for the current <see cref="AudioDevice"/>.
         /// This will automatically fall back to the system default device on failure.
         /// </summary>
+#if XBOX
+        private void initCurrentDevice()
+        {
+            if (!InitBass(0))
+                return;
+
+            UpdateDevice(0);
+        }
+#else
         private void initCurrentDevice()
         {
             string deviceName = AudioDevice.Value;
@@ -376,12 +402,16 @@ namespace osu.Framework.Audio
                 return true;
             }
         }
+#endif
 
         /// <summary>
         /// This method calls <see cref="Bass.Init(int, int, DeviceInitFlags, IntPtr, IntPtr)"/>.
         /// It can be overridden for unit testing.
         /// </summary>
         /// <param name="device">The device to initialise.</param>
+#if XBOX
+        protected virtual bool InitBass(int device) => thread.InitDevice(device, false);
+#else
         protected virtual bool InitBass(int device)
         {
             if (int.TryParse(Environment.GetEnvironmentVariable("OSU_TEMP_TESTING_BASS_CONFIG_DEV_PERIOD"), out int devicePeriod))
@@ -480,6 +510,7 @@ namespace osu.Framework.Audio
                 return true;
             }
         }
+#endif
 
         private void syncAudioDevices()
         {
@@ -527,6 +558,9 @@ namespace osu.Framework.Audio
         /// </remarks>
         /// <param name="previousDevices">The previous audio devices array.</param>
         /// <returns>Whether a change was detected.</returns>
+#if XBOX
+        protected virtual bool CheckForDeviceChanges(ImmutableArray<DeviceInfo> previousDevices) => false;
+#else
         protected virtual bool CheckForDeviceChanges(ImmutableArray<DeviceInfo> previousDevices)
         {
             int deviceCount = Bass.DeviceCount;
@@ -549,7 +583,18 @@ namespace osu.Framework.Audio
 
             return false;
         }
+#endif
 
+#if XBOX
+        protected virtual ImmutableArray<DeviceInfo> GetAllDevices()
+        {
+            // Mirrors BASS' two internal pseudo-devices (no sound, default). Named device selection is not supported yet.
+            var devices = ImmutableArray.CreateBuilder<DeviceInfo>(BASS_INTERNAL_DEVICE_COUNT);
+            devices.Add(new DeviceInfo("No sound", string.Empty, true, false, true));
+            devices.Add(new DeviceInfo("Default", string.Empty, true, true, true));
+            return devices.MoveToImmutable();
+        }
+#else
         protected virtual ImmutableArray<DeviceInfo> GetAllDevices()
         {
             int deviceCount = Bass.DeviceCount;
@@ -560,19 +605,28 @@ namespace osu.Framework.Audio
 
             return devices.MoveToImmutable();
         }
+#endif
 
         // The current device is considered valid if it is enabled, initialized, and not a fallback device.
+#if XBOX
+        protected virtual bool IsCurrentDeviceValid() => SDLAudioOutput.IsInitialised;
+#else
         protected virtual bool IsCurrentDeviceValid()
         {
             var device = audioDevices.ElementAtOrDefault(Bass.CurrentDevice);
             bool isFallback = string.IsNullOrEmpty(AudioDevice.Value) ? !device.IsDefault : device.Name != AudioDevice.Value;
             return device.IsEnabled && device.IsInitialized && !isFallback;
         }
+#endif
 
+#if XBOX
+        public override string ToString() => $@"{GetType().ReadableName()} (SDL3 audio)";
+#else
         public override string ToString()
         {
             string deviceName = audioDevices.ElementAtOrDefault(Bass.CurrentDevice).Name;
             return $@"{GetType().ReadableName()} ({deviceName ?? "Unknown"})";
         }
+#endif
     }
 }

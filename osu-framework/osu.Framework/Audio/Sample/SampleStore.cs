@@ -1,4 +1,4 @@
-﻿// Copyright (c) ppy Pty Ltd <contact@ppy.sh>. Licensed under the MIT Licence.
+// Copyright (c) ppy Pty Ltd <contact@ppy.sh>. Licensed under the MIT Licence.
 // See the LICENCE file in the repository root for full licence text.
 
 #nullable disable
@@ -10,6 +10,9 @@ using System.Threading;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
 using osu.Framework.Audio.Mixing;
+#if XBOX
+using osu.Framework.Audio.SDL;
+#endif
 using osu.Framework.Audio.Mixing.Bass;
 using osu.Framework.IO.Stores;
 using osu.Framework.Statistics;
@@ -21,7 +24,11 @@ namespace osu.Framework.Audio.Sample
         private readonly ResourceStore<byte[]> store;
         private readonly AudioMixer mixer;
 
+#if XBOX
+        private readonly Dictionary<string, SampleSDLFactory> factories = new Dictionary<string, SampleSDLFactory>();
+#else
         private readonly Dictionary<string, SampleBassFactory> factories = new Dictionary<string, SampleBassFactory>();
+#endif
 
         public int PlaybackConcurrency { get; set; } = Sample.DEFAULT_CONCURRENCY;
 
@@ -44,12 +51,20 @@ namespace osu.Framework.Audio.Sample
 
             lock (factories)
             {
+#if XBOX
+                if (!factories.TryGetValue(name, out SampleSDLFactory factory))
+#else
                 if (!factories.TryGetValue(name, out SampleBassFactory factory))
+#endif
                 {
                     this.LogIfNonBackgroundThread(name);
 
                     byte[] data = store.Get(name);
+#if XBOX
+                    factory = factories[name] = data == null ? null : new SampleSDLFactory(data, name, (SDLAudioMixer)mixer) { PlaybackConcurrency = { Value = PlaybackConcurrency } };
+#else
                     factory = factories[name] = data == null ? null : new SampleBassFactory(data, name, (BassAudioMixer)mixer) { PlaybackConcurrency = { Value = PlaybackConcurrency } };
+#endif
 
                     if (factory != null)
                         AddItem(factory);

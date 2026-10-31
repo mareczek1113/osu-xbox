@@ -20,6 +20,7 @@ using osu.Framework.Testing;
 [assembly: InternalsVisibleTo("osu.Framework.Tests.Android")]
 #if XBOX
 [assembly: InternalsVisibleTo("decoder_test")]
+[assembly: InternalsVisibleTo("audio_backend_test")]
 #endif
 #if !XBOX
 [assembly: MetadataUpdateHandler(typeof(HotReloadCallbackReceiver))]

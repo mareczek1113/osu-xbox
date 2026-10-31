@@ -1,4 +1,4 @@
-﻿// Copyright (c) ppy Pty Ltd <contact@ppy.sh>. Licensed under the MIT Licence.
+// Copyright (c) ppy Pty Ltd <contact@ppy.sh>. Licensed under the MIT Licence.
 // See the LICENCE file in the repository root for full licence text.
 
 using osu.Framework.Statistics;
@@ -7,6 +7,9 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using ManagedBass;
+#if XBOX
+using osu.Framework.Audio.SDL;
+#endif
 using ManagedBass.Mix;
 using ManagedBass.Wasapi;
 using osu.Framework.Audio;
@@ -23,7 +26,9 @@ namespace osu.Framework.Threading
             : base(name: "Audio")
         {
             OnNewFrame += onNewFrame;
+#if !XBOX
             PreloadBass();
+#endif
         }
 
         public override bool IsCurrent => ThreadSafety.IsAudioThread;
@@ -55,8 +60,12 @@ namespace osu.Framework.Threading
 
         private void onNewFrame()
         {
+#if XBOX
+            frameCount++;
+#else
             if (frameCount++ % 1000 == 0)
                 cpu_usage.Value = Bass.CPUUsage;
+#endif
 
             lock (managers)
             {
@@ -130,6 +139,18 @@ namespace osu.Framework.Threading
         /// </summary>
         private readonly Bindable<int?> globalMixerHandle = new Bindable<int?>();
 
+#if XBOX
+        internal bool InitDevice(int deviceId, bool useExperimentalWasapi)
+        {
+            Debug.Assert(ThreadSafety.IsAudioThread);
+
+            if (!SDLAudioOutput.Init())
+                return false;
+
+            initialised_devices.Add(deviceId);
+            return true;
+        }
+#else
         internal bool InitDevice(int deviceId, bool useExperimentalWasapi)
         {
             Debug.Assert(ThreadSafety.IsAudioThread);
@@ -147,7 +168,17 @@ namespace osu.Framework.Threading
             initialised_devices.Add(deviceId);
             return true;
         }
+#endif
 
+#if XBOX
+        internal void FreeDevice(int deviceId)
+        {
+            Debug.Assert(ThreadSafety.IsAudioThread);
+
+            SDLAudioOutput.Shutdown();
+            initialised_devices.Remove(deviceId);
+        }
+#else
         internal void FreeDevice(int deviceId)
         {
             Debug.Assert(ThreadSafety.IsAudioThread);
@@ -169,6 +200,7 @@ namespace osu.Framework.Threading
 
             static bool canSelectDevice(int deviceId) => Bass.GetDeviceInfo(deviceId, out var deviceInfo) && deviceInfo.IsInitialized;
         }
+#endif
 
         /// <summary>
         /// Makes BASS available to be consumed.

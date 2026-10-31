@@ -1,4 +1,4 @@
-﻿// Copyright (c) ppy Pty Ltd <contact@ppy.sh>. Licensed under the MIT Licence.
+// Copyright (c) ppy Pty Ltd <contact@ppy.sh>. Licensed under the MIT Licence.
 // See the LICENCE file in the repository root for full licence text.
 
 #nullable disable
@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using JetBrains.Annotations;
 using osu.Framework.Audio.Mixing;
 using osu.Framework.IO.Stores;
+using osu.Framework.Logging;
 
 namespace osu.Framework.Audio.Track
 {
@@ -47,12 +48,21 @@ namespace osu.Framework.Audio.Track
             if (dataStream == null)
                 return null;
 
+#if XBOX
+            var trackSdl = new SDL.TrackSDL(dataStream, name);
+
+            mixer.Add(trackSdl);
+            AddItem(trackSdl);
+
+            return trackSdl;
+#else
             TrackBass trackBass = new TrackBass(dataStream, name);
 
             mixer.Add(trackBass);
             AddItem(trackBass);
 
             return trackBass;
+#endif
         }
 
         public Task<Track> GetAsync(string name, CancellationToken cancellationToken = default) =>

@@ -161,7 +161,7 @@ namespace osu.Framework.Audio.SDL
 
         /// <summary>
         /// MP3 encoders and decoders add silence at both ends. Players that honour the LAME/Xing tag remove it, which keeps
-        /// audio aligned with the timing points authored against it. Without this the decode is late by ~1105 frames (~25 ms at 44.1 kHz).
+        /// audio aligned with the timing points authored against it. The reference behaviour is BASS (what osu! uses today).
         /// </summary>
         private const int mp3_decoder_delay = 529;
 
@@ -199,22 +199,25 @@ namespace osu.Framework.Audio.SDL
             return -1;
         }
 
+        /// <summary>Test hook: disables the gapless trim so the raw decoder output can be compared against a reference.</summary>
+        internal static bool ApplyMp3GaplessTrim = true;
+
         private static DecodedAudio trimMp3Padding(DecodedAudio audio, byte[] source)
         {
-            if (!TryGetMp3Gapless(source, out int delay, out int padding))
+            // NLayer already removes the encoder delay and padding recorded in the LAME/Xing tag (verified against BASS: identical length).
+            // BASS additionally removes the 529-frame decoder delay, so shift by that amount (keeping the length by padding the end with silence).
+            // Files without a tag are left alone by both decoders.
+            if (!ApplyMp3GaplessTrim || !TryGetMp3Gapless(source, out _, out _))
                 return audio;
 
-            int skip = delay + mp3_decoder_delay;
-            int tail = Math.Max(0, padding - mp3_decoder_delay);
-
-            if (skip + tail >= audio.Frames)
+            int skip = Math.Min(mp3_decoder_delay, audio.Frames - 1);
+            if (skip <= 0)
                 return audio;
 
-            float[] trimmed = new float[(audio.Frames - skip - tail) * audio.Channels];
-            Array.Copy(audio.Samples, skip * audio.Channels, trimmed, 0, trimmed.Length);
-            return new DecodedAudio(trimmed, audio.Channels, audio.SampleRate);
+            float[] shifted = new float[audio.Samples.Length];
+            Array.Copy(audio.Samples, skip * audio.Channels, shifted, 0, shifted.Length - skip * audio.Channels);
+            return new DecodedAudio(shifted, audio.Channels, audio.SampleRate);
         }
-
         private static DecodedAudio readAll(int channels, int rate, long expectedFrames, Func<float[], int, int> read)
         {
             float[] output = new float[Math.Max(expectedFrames, 4096) * channels];

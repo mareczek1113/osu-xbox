@@ -73,7 +73,6 @@ namespace osu.Framework.Audio.SDL
 
         public DecodedAudio? Audio => factory.Audio;
 
-
         public override bool IsLoaded => factory.IsLoaded;
 
         public override double Length => factory.Length;
@@ -132,10 +131,6 @@ namespace osu.Framework.Audio.SDL
         // Only touched by the device thread.
         private double position;
 
-        // Latency telemetry: Stopwatch timestamps of the last Play() request and of when the device thread first mixed it.
-        internal long PlayRequestedTimestamp;
-        internal long FirstMixedTimestamp;
-
         public SampleChannelSDL(SampleSDL sample)
             : base(sample.Name)
         {
@@ -159,8 +154,6 @@ namespace osu.Framework.Audio.SDL
             ObjectDisposedException.ThrowIf(IsDisposed, this);
 
             userRequestedPlay = true;
-            Volatile.Write(ref FirstMixedTimestamp, 0);
-            Volatile.Write(ref PlayRequestedTimestamp, System.Diagnostics.Stopwatch.GetTimestamp());
             Volatile.Write(ref pendingStart, 1);
 
             sample.OnChannelStarted(this);
@@ -205,7 +198,6 @@ namespace osu.Framework.Audio.SDL
             {
                 position = 0;
                 playing = true;
-                Volatile.Write(ref FirstMixedTimestamp, System.Diagnostics.Stopwatch.GetTimestamp());
             }
 
             if (!playing)

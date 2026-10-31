@@ -27,4 +27,6 @@ Build the framework for the port with `-p:XboxPort=true` (defines `XBOX`). The n
 - Audio/SDL/AudioDecoder.cs: managed WAV / Ogg Vorbis / MP3 decoding (NVorbis, NLayer 3.0.0), checked against BASS: identical length and zero offset on the test files.
 - SDLAudioOutput (one SDL3 output stream, 48 kHz stereo float), SDLAudioMixer, SampleSDL* (volume, balance, frequency, looping, playback concurrency).
 - Measured on a PC (WASAPI shared): Play() to first audio rendered ~9 ms median, plus the 10 ms device buffer.
-- Not done yet: tracks (the Xbox build returns a silent virtual track), audio effects, amplitude data, waveform decoding, named device selection.
+- Audio/SDL/TrackSDL.cs: tracks, fully decoded in memory. Start/stop/seek (applied lock-free on the device thread, CurrentTime reflects a seek immediately), Completed fires once, looping with RestartPoint, volume, balance, frequency (including negative = reverse). Checked end to end through AudioManager on a PC.
+- Not done yet: **tempo is plain resampling, so pitch follows speed** (DT/HT will sound pitched; needs a time-stretcher such as WSOLA), audio effects (low-pass etc.), amplitude data (`CurrentAmplitudes`, used by the logo visualiser), waveform decoding, named device selection.
+- Memory: a decoded 4-minute track is roughly 85-90 MB as 32-bit float. Consider keeping tracks as 16-bit PCM if the console's memory budget gets tight.

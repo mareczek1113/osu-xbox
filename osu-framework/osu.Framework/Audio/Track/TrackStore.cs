@@ -49,13 +49,12 @@ namespace osu.Framework.Audio.Track
                 return null;
 
 #if XBOX
-            // TODO: TrackSDL. Until it exists the Xbox backend hands out a silent virtual track.
-            dataStream.Dispose();
-            Logger.Log($"Track playback is not implemented in the SDL audio backend yet; '{name}' will be silent.", LoggingTarget.Runtime, LogLevel.Important);
+            var trackSdl = new SDL.TrackSDL(dataStream, name);
 
-            var silent = new TrackVirtual(double.PositiveInfinity, name);
-            AddItem(silent);
-            return silent;
+            mixer.Add(trackSdl);
+            AddItem(trackSdl);
+
+            return trackSdl;
 #else
             TrackBass trackBass = new TrackBass(dataStream, name);
 

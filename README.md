@@ -4,20 +4,20 @@
 
 # osu! Xbox
 
-### Bringing osu!lazer to Xbox Series S.
+### Bringing osu!lazer to Xbox Series X|S.
 
-An unofficial port bringing osu!lazer to Xbox Series S using UWP/GDK technologies.
+An unofficial port bringing osu!lazer to Xbox Series X|S using UWP/GDK technologies.
 
 <br>
 
 ![Status](https://img.shields.io/badge/STATUS-WORKING_PORT-ff66aa?style=for-the-badge)
-![Platform](https://img.shields.io/badge/PLATFORM-XBOX_SERIES_S-ff66aa?style=for-the-badge)
+![Platform](https://img.shields.io/badge/PLATFORM-XBOX_SERIES_X%7CS-ff66aa?style=for-the-badge)
 ![Language](https://img.shields.io/badge/LANGUAGE-C%23-ff66aa?style=for-the-badge)
 ![Project](https://img.shields.io/badge/PROJECT-OSU!LAZER-ff66aa?style=for-the-badge)
 
 <br>
 
-**An independent project bringing the osu!lazer experience to Xbox. The game is running, with controller support being the main remaining development goal.**
+**The full game is running on Xbox Series S, with graphics and audio working. Mouse and pointer input is almost complete, and Xbox controller support is the next major goal.**
 
 </div>
 
@@ -25,21 +25,24 @@ An unofficial port bringing osu!lazer to Xbox Series S using UWP/GDK technologie
 
 ## 💗 About
 
-osu! Xbox is an independent project bringing [osu!lazer](https://github.com/ppy/osu) to Xbox Series S.
+osu! Xbox is an independent project bringing [osu!lazer](https://github.com/ppy/osu) to Xbox Series X|S.
 
 The project adapts osu!'s existing codebase and framework to work within an Xbox environment.
 
-The full game is now running on Xbox, with graphics rendering and audio playback working.
+The full game is running on Xbox Series S, with graphics rendering and audio playback working.
 
-The current focus is controller integration, with the goal of making osu! fully playable using an Xbox controller.
+Xbox Series X is also a target platform, with compatibility testing still to be completed.
 
-> **Current milestone:** osu!lazer runs on Xbox Series S. Controller support is still in development.
+The current focus is finishing mouse and pointer input and implementing full Xbox controller support.
+
+> **Current milestone:** osu!lazer runs on Xbox Series S. Graphics and audio are working, mouse and pointer input is almost complete, and controller support is in development.
 
 ## ✨ Goals
 
 - 🎮 Implement full Xbox controller support.
+- 🖱️ Complete mouse and pointer input.
 - 🎵 Maintain reliable audio playback and timing.
-- 🎨 Keep graphics rendering working on Xbox hardware.
+- 🎨 Keep graphics rendering working across Xbox hardware.
 - ⚡ Improve performance and stability.
 - 🖥️ Make the interface comfortable to use on a television.
 - 🔧 Maintain compatibility with the adapted osu!framework.
@@ -52,7 +55,7 @@ The current focus is controller integration, with the goal of making osu! fully 
 | Original game | osu!lazer |
 | Main language | C# |
 | Framework | Modified osu!framework |
-| Target platform | Xbox Series S |
+| Target platform | Xbox Series X\|S |
 | Platform technology | UWP/GDK |
 | Graphics | Working Xbox graphics implementation |
 | Audio | Working Xbox audio implementation |
@@ -68,19 +71,28 @@ The current focus is controller integration, with the goal of making osu! fully 
 | Audio playback | 🟢 Working |
 | Xbox platform integration | 🟢 Working |
 | Framework adaptation | 🟢 Working |
-| Mouse and pointer input | 🟡 Under investigation |
-| Xbox controller support | 🟡 Main development focus |
-| Full controller-based gameplay | 🔴 Not yet completed |
+| Mouse and pointer input | 🟡 Almost complete |
+| Xbox controller support | 🔴 In development |
+| Controller-based gameplay | 🔴 Not completed |
+| Xbox Series X testing | 🟡 Not yet verified |
 
 **Status key**
 
 - 🟢 Working
-- 🟡 In progress
+- 🟡 Almost complete / in progress
 - 🔴 Not completed
 
-## 🎮 Current Focus: Controller Support
+## 🎮 Current Focus: Input Support
 
-With the game running on Xbox and graphics and audio operational, development is now focused on Xbox controller integration.
+With the full game running on Xbox and graphics and audio operational, development is now focused on input support.
+
+### Mouse and pointer
+
+Mouse and pointer input is almost complete. The remaining work focuses on making pointer behaviour consistent and reliable within osu!lazer.
+
+### Xbox controller
+
+The next major development goal is full Xbox controller integration.
 
 The goal is to support:
 
@@ -90,13 +102,11 @@ The goal is to support:
 - Gameplay input.
 - Consistent input handling across the game.
 
-The existing mouse and pointer input behaviour is also being investigated to ensure input feels consistent on Xbox.
-
 ## 🧪 Technical Development
 
 ### Graphics
 
-The Xbox graphics implementation is working, allowing osu!lazer to render on the console.
+The Xbox graphics implementation is working, allowing osu!lazer to render on Xbox Series S.
 
 ### Audio
 
@@ -106,9 +116,11 @@ Audio playback is working on Xbox, allowing the game to produce sound through it
 
 The application and adapted framework are running in the Xbox environment.
 
+The project targets Xbox Series X|S, with Series X testing still to be completed.
+
 ### Input
 
-Controller support is the main remaining milestone. Work is focused on connecting Xbox input to osu!'s existing input and gameplay systems.
+Mouse and pointer input is almost complete. Controller support is the next major milestone, connecting Xbox controller input to osu!'s existing input and gameplay systems.
 
 ## 📦 Installation
 
@@ -125,6 +137,8 @@ Release and installation instructions will be added when a public build is ready
 - [x] Get graphics rendering working.
 - [x] Get audio playback working.
 - [x] Run the full game on Xbox Series S.
+- [ ] Complete mouse and pointer input.
+- [ ] Verify the build on Xbox Series X.
 - [ ] Complete Xbox controller integration.
 - [ ] Implement controller-based menu navigation.
 - [ ] Implement controller-based gameplay.

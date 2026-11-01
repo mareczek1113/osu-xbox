@@ -1,4 +1,0 @@
-public partial class OnTabletPenButtonReleaseMethod : osu.Framework.Graphics.Drawable
-{
-    protected override void OnTabletPenButtonRelease(object e) { }
-}

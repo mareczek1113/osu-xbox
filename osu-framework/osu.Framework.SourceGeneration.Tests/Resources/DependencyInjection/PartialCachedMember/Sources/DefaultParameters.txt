@@ -1,5 +1,0 @@
-public partial class DefaultParameters : osu.Framework.Graphics.Drawable
-{
-    [osu.Framework.Allocation.Cached]
-    public object CachedProperty { get; set; }
-}

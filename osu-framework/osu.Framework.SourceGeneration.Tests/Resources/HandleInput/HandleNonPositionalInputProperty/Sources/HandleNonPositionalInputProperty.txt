@@ -1,4 +1,0 @@
-public partial class HandleNonPositionalInputProperty : osu.Framework.Graphics.Drawable
-{
-    protected override bool HandleNonPositionalInput => false;
-}

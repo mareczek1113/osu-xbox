@@ -1,5 +1,0 @@
-using osu.Framework.Input.Bindings;
-
-public partial class IKeyBindingHandlerInterface : osu.Framework.Graphics.Drawable, IKeyBindingHandler
-{
-}

@@ -1,4 +1,0 @@
-public partial class OnDoubleClickMethod : osu.Framework.Graphics.Drawable
-{
-    protected override void OnDoubleClick(object e) { }
-}

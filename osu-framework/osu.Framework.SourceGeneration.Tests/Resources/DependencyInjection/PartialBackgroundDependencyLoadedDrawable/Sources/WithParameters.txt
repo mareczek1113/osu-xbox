@@ -1,7 +1,0 @@
-public partial class WithParameters : osu.Framework.Graphics.Drawable
-{
-    [osu.Framework.Allocation.BackgroundDependencyLoader]
-    private void load(object obj)
-    {
-    }
-}

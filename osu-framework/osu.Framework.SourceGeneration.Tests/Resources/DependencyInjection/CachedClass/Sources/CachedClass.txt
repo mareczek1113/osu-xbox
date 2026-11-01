@@ -1,4 +1,0 @@
-[osu.Framework.Allocation.Cached]
-public class CachedClass
-{
-}

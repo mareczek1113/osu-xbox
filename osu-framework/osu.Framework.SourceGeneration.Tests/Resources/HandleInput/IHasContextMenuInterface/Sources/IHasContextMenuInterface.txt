@@ -1,5 +1,0 @@
-using osu.Framework.Graphics.Cursor;
-
-public partial class IHasContextMenuInterface : osu.Framework.Graphics.Drawable, IHasContextMenu
-{
-}

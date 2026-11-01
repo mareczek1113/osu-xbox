@@ -1,4 +1,0 @@
-[osu.Framework.Allocation.Cached(Type = typeof(object))]
-public partial class WithTypeProperty : osu.Framework.Graphics.Drawable
-{
-}

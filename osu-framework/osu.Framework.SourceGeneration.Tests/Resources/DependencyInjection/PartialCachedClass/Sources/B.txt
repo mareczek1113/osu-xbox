@@ -1,4 +1,0 @@
-[osu.Framework.Allocation.Cached]
-public partial class B : A
-{
-}

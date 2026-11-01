@@ -1,4 +1,0 @@
-public partial class OnTabletPenButtonPressMethod : osu.Framework.Graphics.Drawable
-{
-    protected override void OnTabletPenButtonPress(object e) { }
-}

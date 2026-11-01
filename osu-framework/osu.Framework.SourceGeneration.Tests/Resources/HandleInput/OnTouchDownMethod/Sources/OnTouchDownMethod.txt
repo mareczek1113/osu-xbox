@@ -1,4 +1,0 @@
-public partial class OnTouchDownMethod : osu.Framework.Graphics.Drawable
-{
-    protected override void OnTouchDown(object e) { }
-}

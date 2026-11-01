@@ -1,5 +1,0 @@
-using osu.Framework.Graphics;
-
-public partial class EmptyPartialDrawable : Drawable
-{
-}

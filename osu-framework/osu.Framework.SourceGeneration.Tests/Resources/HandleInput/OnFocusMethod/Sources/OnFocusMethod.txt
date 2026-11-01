@@ -1,4 +1,0 @@
-public partial class OnFocusMethod : osu.Framework.Graphics.Drawable
-{
-    protected override void OnFocus(object e) { }
-}

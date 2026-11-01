@@ -1,5 +1,0 @@
-using osu.Framework.Graphics.Cursor;
-
-public partial class IHasTooltipInterface : osu.Framework.Graphics.Drawable, IHasTooltip
-{
-}

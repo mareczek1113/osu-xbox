@@ -1,4 +1,4 @@
-<div align="center">
+ <div align="center">
 
 <img src="https://github.com/ppy/osu/blob/master/assets/lazer.png" width="100" alt="osu! logo">
 
@@ -6,19 +6,18 @@
 
 ### Bringing osu!lazer to Xbox Series S.
 
-An unofficial port exploring the feasibility of running
-osu!lazer on Xbox using UWP/GDK technologies.
+An unofficial port bringing osu!lazer to Xbox Series S using UWP/GDK technologies.
 
 <br>
 
-![Status](https://img.shields.io/badge/STATUS-EXPERIMENTAL-ff66aa?style=for-the-badge)
-![Platform](https://img.shields.io/badge/PLATFORM-XBOX-ff66aa?style=for-the-badge)
+![Status](https://img.shields.io/badge/STATUS-WORKING_PORT-ff66aa?style=for-the-badge)
+![Platform](https://img.shields.io/badge/PLATFORM-XBOX_SERIES_S-ff66aa?style=for-the-badge)
 ![Language](https://img.shields.io/badge/LANGUAGE-C%23-ff66aa?style=for-the-badge)
 ![Project](https://img.shields.io/badge/PROJECT-OSU!LAZER-ff66aa?style=for-the-badge)
 
 <br>
 
-**An independent project made for the osu! community, exploring the technical challenges of bringing osu!lazer to Xbox.**
+**An independent project bringing the osu!lazer experience to Xbox. The game is running, with controller support being the main remaining development goal.**
 
 </div>
 
@@ -26,28 +25,25 @@ osu!lazer on Xbox using UWP/GDK technologies.
 
 ## 💗 About
 
-osu! Xbox is an independent project developed for the osu! community, exploring the possibility of running
-[osu!lazer](https://github.com/ppy/osu) on Xbox Series S.
+osu! Xbox is an independent project bringing [osu!lazer](https://github.com/ppy/osu) to Xbox Series S.
 
-The project investigates the compatibility of osu!'s existing codebase with
-Xbox development technologies, including graphics, audio, input and platform
-integration.
+The project adapts osu!'s existing codebase and framework to work within an Xbox environment.
 
-The aim is to preserve the core osu! experience while adapting the underlying
-technology for Xbox hardware.
+The full game is now running on Xbox, with graphics rendering and audio playback working.
 
-> This project is experimental. Console compatibility and a playable build
-> have not yet been established.
+The current focus is controller integration, with the goal of making osu! fully playable using an Xbox controller.
+
+> **Current milestone:** osu!lazer runs on Xbox Series S. Controller support is still in development.
 
 ## ✨ Goals
 
-- 🎮 Investigate Xbox controller support.
-- 🎵 Explore accurate audio timing and playback.
-- 🎨 Investigate a compatible graphics rendering backend.
-- ⚡ Evaluate performance on Xbox hardware.
-- 🖥️ Explore adapting osu!'s interface for television displays.
-- 🔧 Investigate .NET NativeAOT compatibility.
-- 💗 Preserve the core osu! gameplay experience.
+- 🎮 Implement full Xbox controller support.
+- 🎵 Maintain reliable audio playback and timing.
+- 🎨 Keep graphics rendering working on Xbox hardware.
+- ⚡ Improve performance and stability.
+- 🖥️ Make the interface comfortable to use on a television.
+- 🔧 Maintain compatibility with the adapted osu!framework.
+- 💗 Preserve the core osu!lazer gameplay experience.
 
 ## 🛠️ Technology
 
@@ -55,89 +51,94 @@ technology for Xbox hardware.
 |---|---|
 | Original game | osu!lazer |
 | Main language | C# |
-| Framework | osu!framework |
+| Framework | Modified osu!framework |
 | Target platform | Xbox Series S |
-| Platform technology | UWP/GDK investigation |
-| Graphics | D3D12 investigation |
-| Audio | SDL3 mixer prototype |
-| Compilation | .NET NativeAOT investigation |
-
-Technologies listed above are under investigation and may change during
-development.
+| Platform technology | UWP/GDK |
+| Graphics | Working Xbox graphics implementation |
+| Audio | Working Xbox audio implementation |
+| Compilation | .NET / NativeAOT |
 
 ## 📊 Development Status
 
 | Component | Status |
 |---|---|
-| Repository setup | 🟢 Started |
-| Source code investigation | 🟢 Started |
-| Audio mixer prototype | 🟡 Experimental |
-| NativeAOT compatibility | 🟡 Under investigation |
-| Xbox platform integration | 🔴 Not verified |
-| Graphics backend | 🔴 Not implemented |
-| Controller integration | 🔴 Not implemented |
-| Full game integration | 🔴 Not implemented |
-| Playable Xbox build | 🔴 Not available |
+| Xbox application startup | 🟢 Working |
+| Full osu!lazer integration | 🟢 Working |
+| Graphics rendering | 🟢 Working |
+| Audio playback | 🟢 Working |
+| Xbox platform integration | 🟢 Working |
+| Framework adaptation | 🟢 Working |
+| Mouse and pointer input | 🟡 Under investigation |
+| Xbox controller support | 🟡 Main development focus |
+| Full controller-based gameplay | 🔴 Not yet completed |
 
 **Status key**
 
-- 🟢 Started or available for investigation
-- 🟡 Experimental or in progress
-- 🔴 Not implemented or not verified
+- 🟢 Working
+- 🟡 In progress
+- 🔴 Not completed
 
-## 🧪 Research
+## 🎮 Current Focus: Controller Support
 
-Development is currently focused on investigating the main technical
-challenges.
+With the game running on Xbox and graphics and audio operational, development is now focused on Xbox controller integration.
 
-### Audio
+The goal is to support:
 
-A standalone software mixer prototype has been developed for experimentation
-with playback speed, sample mixing and audio-position timing.
+- Navigation through menus.
+- Selecting and confirming interface elements.
+- Navigating song selection.
+- Gameplay input.
+- Consistent input handling across the game.
 
-The prototype has not yet been integrated into osu!framework, and its results
-do not establish actual Xbox audio latency.
+The existing mouse and pointer input behaviour is also being investigated to ensure input feels consistent on Xbox.
+
+## 🧪 Technical Development
 
 ### Graphics
 
-The existing rendering architecture is being investigated to determine
-what changes would be needed for an Xbox-compatible Direct3D 12 backend.
+The Xbox graphics implementation is working, allowing osu!lazer to render on the console.
+
+### Audio
+
+Audio playback is working on Xbox, allowing the game to produce sound through its adapted audio implementation.
 
 ### Platform compatibility
 
-The project is investigating .NET compilation, native dependencies,
-input handling and platform-specific APIs.
+The application and adapted framework are running in the Xbox environment.
+
+### Input
+
+Controller support is the main remaining milestone. Work is focused on connecting Xbox input to osu!'s existing input and gameplay systems.
 
 ## 📦 Installation
 
-There are currently no public releases or playable Xbox builds.
+There are currently no public releases or installation packages.
 
-Installation instructions will be added when a working build becomes
-available.
+Release and installation instructions will be added when a public build is ready.
 
 ## 🗺️ Roadmap
 
 - [x] Create the project repository.
-- [x] Begin investigating osu!lazer and osu!framework.
-- [x] Develop an experimental audio mixer prototype.
-- [ ] Validate the target Xbox development environment.
-- [ ] Complete a minimal platform compatibility test.
-- [ ] Investigate graphics backend integration.
-- [ ] Integrate audio with osu!framework.
-- [ ] Investigate controller support.
-- [ ] Boot osu!lazer using the adapted platform components.
-- [ ] Test performance and gameplay timing.
-- [ ] Publish a build if feasible.
+- [x] Adapt osu!framework for Xbox.
+- [x] Get the Xbox application running.
+- [x] Integrate osu!lazer.
+- [x] Get graphics rendering working.
+- [x] Get audio playback working.
+- [x] Run the full game on Xbox Series S.
+- [ ] Complete Xbox controller integration.
+- [ ] Implement controller-based menu navigation.
+- [ ] Implement controller-based gameplay.
+- [ ] Polish input behaviour and user experience.
+- [ ] Test stability and performance.
+- [ ] Prepare a public release.
 
 ## 🤝 Contributing
 
 Suggestions, technical discussion and contributions are welcome.
 
-Please open an issue to discuss significant changes before submitting
-a pull request.
+Please open an issue to discuss significant changes before submitting a pull request.
 
-All contributions must respect the applicable licences of the original
-project and third-party dependencies.
+All contributions must respect the applicable licences of the original project and third-party dependencies.
 
 ## 💗 Credits
 
@@ -145,14 +146,11 @@ project and third-party dependencies.
 - [ppy/osu](https://github.com/ppy/osu) — Open-source osu!lazer project.
 - [ppy/osu-framework](https://github.com/ppy/osu-framework) — Game framework.
 
-This project is independently developed for the osu! community and is not
-affiliated with, endorsed by, or officially supported by ppy or the osu!
-development team.
+This project is independently developed for the osu! community and is not affiliated with, endorsed by, or officially supported by ppy or the osu! development team.
 
 ## 📄 Licence
 
-The licensing terms for this port and its original components must be
-respected.
+The licensing terms for this port and its original components must be respected.
 
 See [LICENSE](LICENSE) for the licence applicable to this repository.
 

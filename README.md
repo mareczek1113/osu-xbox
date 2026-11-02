@@ -6,7 +6,7 @@
 
 ### Bringing osu!lazer to Xbox Series X|S.
 
-An unofficial port bringing osu!lazer to Xbox Series X|S using UWP/GDK technologies.
+An unofficial port bringing osu!lazer to Xbox Series X|S using GDK technologies.
 
 <br>
 
@@ -17,7 +17,7 @@ An unofficial port bringing osu!lazer to Xbox Series X|S using UWP/GDK technolog
 
 <br>
 
-**The full game is running on Xbox Series S, with graphics and audio working. Menus, the pointer, controller input and USB mouse support are in place and being polished.**
+**The full game is running on Xbox Series S, with graphics and audio working. Controller pointer support, menu navigation and controller-based gameplay are working and being polished.**
 
 </div>
 
@@ -27,20 +27,19 @@ An unofficial port bringing osu!lazer to Xbox Series X|S using UWP/GDK technolog
 
 osu! Xbox is an independent project bringing [osu!lazer](https://github.com/ppy/osu) to Xbox Series X|S.
 
-The project adapts osu!'s existing codebase and framework to work within an Xbox environment.
+The project adapts osu!'s existing codebase and framework to work within an Xbox environment using GDK.
 
 The full game is running on Xbox Series S, with graphics rendering and audio playback working.
 
 Xbox Series X is also a target platform, with compatibility testing still to be completed.
 
-The current focus is finishing input support and working towards beatmap and skin support.
+The current focus is polishing controller input and working towards beatmap and skin support.
 
-> **Current milestone:** osu!lazer runs on Xbox Series S. Graphics and audio are working, and mouse, pointer and controller input are almost complete.
+> **Current milestone:** osu!lazer runs on Xbox Series S. Graphics, audio, controller pointer navigation, menus and controller-based gameplay are working.
 
 ## ✨ Goals
 
-- 🎮 Complete Xbox controller support.
-- 🖱️ Finish mouse and pointer input.
+- 🎮 Polish Xbox controller support.
 - 🎵 Maintain reliable audio playback and timing.
 - 🎨 Keep graphics rendering working across Xbox hardware.
 - 🗺️ Add beatmap support.
@@ -58,7 +57,7 @@ The current focus is finishing input support and working towards beatmap and ski
 | Main language | C# |
 | Framework | Modified osu!framework |
 | Target platform | Xbox Series X\|S |
-| Platform technology | UWP/GDK |
+| Platform technology | GDK |
 | Graphics | Working Xbox graphics implementation |
 | Audio | Working Xbox audio implementation |
 | Compilation | .NET / NativeAOT |
@@ -74,8 +73,7 @@ The current focus is finishing input support and working towards beatmap and ski
 | Xbox platform integration | 🟢 Working |
 | Framework adaptation | 🟢 Working |
 | Controller pointer and menus | 🟢 Working |
-| USB mouse | 🟡 Being verified on hardware |
-| Controller-based gameplay | 🟡 Playable, being polished |
+| Controller-based gameplay | 🟡 Almost complete |
 | Beatmap support | 🔴 Not started |
 | Skin support | 🔴 Not started |
 | Xbox Series X testing | 🟡 Not yet verified |
@@ -86,9 +84,9 @@ The current focus is finishing input support and working towards beatmap and ski
 - 🟡 Almost complete / in progress
 - 🔴 Not started / not completed
 
-## 🎮 Current Focus: Input Support
+## 🎮 Current Focus: Controller Support
 
-With the full game running on Xbox and graphics and audio operational, development is focused on input support.
+With the full game running on Xbox and graphics and audio operational, development is focused on polishing controller input.
 
 ### Controller pointer and menus
 
@@ -103,25 +101,25 @@ With a controller, the Xbox acts as a mouse-driven osu! machine:
 | Menu button | Pause while playing, back in menus (can be switched off) |
 | View button | Open the on-screen keyboard when a text box is active |
 
-Open **Settings → Input → Gamepad (UWP)** to tune it:
+Open **Settings → Input → Gamepad (GDK)** to tune it:
 
 - **Move pointer with right stick**: swaps the sticks, so the right stick moves the cursor and the left stick scrolls.
 - **Pointer speed**, **response curve** and **precision speed**.
 - **Menu button pauses**: also sends Escape, which pauses a beatmap and goes back in menus.
 - **Menu scroll speed** and **stick deadzone**.
 
-The settings are saved automatically.
+### Mouse support limitation
 
-### USB mouse
+Native mouse support is not currently available in this port.
 
-A USB mouse moves the cursor from its raw movement, and its buttons and wheel work as normal. Sensitivity is in **Settings → Input → Mouse (UWP)**. The pad and the mouse share one cursor, so switching between them continues from where the cursor is.
+The existing input implementation relies on UWP-specific APIs, which are not available in the same way under the current GDK application setup. As a result, adding mouse support requires a different input implementation rather than simply enabling USB mouse support.
 
-Pointer mode is chosen with `pointer.txt` in the app's local folder (`hybrid` by default, also `pad` and `system`). Use `hybrid` for a USB mouse.
+The current focus is therefore on controller-based navigation and gameplay.
 
-### Still in progress
+### Controller-based gameplay
 
-- Polishing controller gameplay input and verifying USB mouse behaviour on hardware.
-- Beatmap and skin support.
+Controller-based gameplay is almost complete. The remaining work focuses on polishing input behaviour and ensuring a consistent gameplay experience.
+
 ## 🧪 Technical Development
 
 ### Graphics
@@ -134,13 +132,15 @@ Audio playback is working on Xbox, allowing the game to produce sound through it
 
 ### Platform compatibility
 
-The application and adapted framework are running in the Xbox environment.
+The application and adapted framework are running in the Xbox environment using GDK.
 
 The project targets Xbox Series X|S, with Series X testing still to be completed.
 
 ### Input
 
-The controller pointer, menus and Menu-button pause work, and USB mouse support is being verified. Controller gameplay is playable and being polished.
+Controller pointer movement, menu navigation and controller-based gameplay are working. Development is focused on polishing the remaining input behaviour.
+
+Native mouse support is not currently implemented because of the limitations of the existing UWP-specific input implementation.
 
 ### Beatmaps and skins
 
@@ -174,13 +174,13 @@ Follow this tutorial for help:
 
 <text color="secondary" size="xs">The installation package and download link will be added when the first public release is ready.</text>
 
-**3. Change the UWP application type**
+**3. Configure the application**
 
-Change the UWP application type from **App** to **Game** as required for the Xbox setup.
+Configure the GDK application for the appropriate Xbox game deployment and launch settings.
 
 **4. Launch osu! Xbox**
 
-Once installed and configured, launch osu! Xbox from your Xbox Dev Mode environment.
+Once installed and configured, launch osu! Xbox from your Xbox development environment.
 
 ## 🗺️ Roadmap
 
@@ -191,11 +191,9 @@ Once installed and configured, launch osu! Xbox from your Xbox Dev Mode environm
 - [x] Get graphics rendering working.
 - [x] Get audio playback working.
 - [x] Run the full game on Xbox Series S.
-- [x] Controller pointer, menu navigation and pause.
+- [x] Controller pointer and menu navigation.
 - [x] Choice of left or right stick for the pointer.
-- [ ] Finish USB mouse support.
-- [ ] Complete Xbox controller support.
-- [ ] Complete controller-based gameplay.
+- [ ] Polish controller-based gameplay.
 - [ ] Add beatmap support.
 - [ ] Add skin support.
 - [ ] Verify the build on Xbox Series X.

@@ -6,7 +6,7 @@
 
 ### Bringing osu!lazer to Xbox Series X|S.
 
-An unofficial port bringing osu!lazer to Xbox Series X|S using GDK technologies.
+An unofficial port bringing osu!lazer to Xbox Series X|S using UWP technologies.
 
 <br>
 
@@ -27,7 +27,7 @@ An unofficial port bringing osu!lazer to Xbox Series X|S using GDK technologies.
 
 osu! Xbox is an independent project bringing [osu!lazer](https://github.com/ppy/osu) to Xbox Series X|S.
 
-The project adapts osu!'s existing codebase and framework to work within an Xbox environment using GDK.
+The project adapts osu!'s existing codebase and framework to work within an Xbox environment using UWP.
 
 The full game is running on Xbox Series S, with graphics rendering and audio playback working.
 
@@ -57,7 +57,7 @@ The current focus is polishing controller input and working towards beatmap and 
 | Main language | C# |
 | Framework | Modified osu!framework |
 | Target platform | Xbox Series X\|S |
-| Platform technology | GDK |
+| Platform technology | UWP |
 | Graphics | Working Xbox graphics implementation |
 | Audio | Working Xbox audio implementation |
 | Compilation | .NET / NativeAOT |
@@ -101,7 +101,7 @@ With a controller, the Xbox acts as a mouse-driven osu! machine:
 | Menu button | Pause while playing, back in menus (can be switched off) |
 | View button | Open the on-screen keyboard when a text box is active |
 
-Open **Settings → Input → Gamepad (GDK)** to tune it:
+Open **Settings → Input → Gamepad (UWP)** to tune it:
 
 - **Move pointer with right stick**: swaps the sticks, so the right stick moves the cursor and the left stick scrolls.
 - **Pointer speed**, **response curve** and **precision speed**.
@@ -112,9 +112,11 @@ Open **Settings → Input → Gamepad (GDK)** to tune it:
 
 Native mouse support is not currently available in this port.
 
-The existing input implementation relies on UWP-specific APIs, which are not available in the same way under the current GDK application setup. As a result, adding mouse support requires a different input implementation rather than simply enabling USB mouse support.
+The current implementation uses UWP-specific input handling, which has limitations in the Xbox environment. The way input is currently implemented does not provide the mouse functionality needed by osu!lazer.
 
-The current focus is therefore on controller-based navigation and gameplay.
+Adding mouse support would require a different input implementation and additional platform-specific work.
+
+For now, controller input is the primary way to navigate and play osu! Xbox.
 
 ### Controller-based gameplay
 
@@ -132,7 +134,7 @@ Audio playback is working on Xbox, allowing the game to produce sound through it
 
 ### Platform compatibility
 
-The application and adapted framework are running in the Xbox environment using GDK.
+The application and adapted framework are running in the Xbox environment using UWP.
 
 The project targets Xbox Series X|S, with Series X testing still to be completed.
 
@@ -176,11 +178,11 @@ Follow this tutorial for help:
 
 **3. Configure the application**
 
-Configure the GDK application for the appropriate Xbox game deployment and launch settings.
+Make sure the UWP application is configured correctly for Xbox deployment.
 
 **4. Launch osu! Xbox**
 
-Once installed and configured, launch osu! Xbox from your Xbox development environment.
+Once installed and configured, launch osu! Xbox from your Xbox Developer Mode environment.
 
 ## 🗺️ Roadmap
 

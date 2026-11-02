@@ -1,8 +1,4 @@
-# osu! on Xbox (Dev Mode)
-
-Work in progress: a port of [osu!](https://github.com/ppy/osu) to Xbox Dev Mode, built as a .NET 10 Native AOT UWP app.
-
-**Status:** experimental. It runs on a console in Dev Mode, but input and stability are still being worked on. Not tested on retail mode (and not expected to work there).
+﻿# Building and repo layout
 
 ## Layout
 
@@ -35,6 +31,3 @@ A full Native AOT build takes roughly 10 to 20 minutes. The package ends up in `
 - USB mouse in pad mode: the console sends no mouse input while its own pointer is off, so hybrid pointer mode is used instead.
 - Possible double A press (pad handler plus system pointer press), unconfirmed.
 
-## Licence
-
-`osu-aot/` is derived from ppy/osu and keeps its original licence (see `osu-aot/LICENCE`). osu! assets have their own licence terms, so check the upstream repository before redistributing builds.

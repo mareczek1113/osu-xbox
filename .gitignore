@@ -1,7 +1,9 @@
-# Whitelist: ignore everything at the top level except the files that make up the port.
+﻿# Whitelist: ignore everything at the top level except the files that make up the port.
 /*
 !/.gitignore
 !/README.md
+!/LICENSE
+!/docs/
 !/uwp-osu/
 !/osu-aot/
 !/package-uwp.ps1
@@ -14,9 +16,29 @@ bin/
 obj/
 out/
 layout/
+publish/
+aot-publish/
+aot-xbox-publish*/
+aot-full/out-xbox/
 *.appx
 *.msix
 *.cer
 *.pfx
+
+# Logs and temporary output
 *.log
 *.out.txt
+*-out.txt
+*-err.txt
+
+# Downloaded installers
+dotnet-install.ps1
+vs_BuildTools.exe
+
+# Local test data
+storage/
+
+# Visual Studio and temporary files
+.vs/
+*.user
+*.suo

@@ -18,10 +18,16 @@ public partial class XboxPadSettings : InputSubsection
         // Built in the constructor (no reflected load method) so Native AOT trimming cannot drop it.
         AddRange(new Drawable[]
         {
+            new SettingsItemV2(new FormCheckBox
+            {
+                Caption = "Move pointer with right stick",
+                HintText = "Off: left stick moves the cursor and the right stick scrolls menus. On: the sticks swap roles.",
+                Current = pad.PointerOnRightStick.GetBoundCopy(),
+            }),
             new SettingsItemV2(new FormSliderBar<float>
             {
                 Caption = "Pointer speed",
-                HintText = "How fast the left stick moves the cursor.",
+                HintText = "How fast the selected stick moves the cursor.",
                 KeyboardStep = 0.05f,
                 Current = pad.PointerSpeed.GetBoundCopy(),
             }),
@@ -47,7 +53,7 @@ public partial class XboxPadSettings : InputSubsection
             }),
             new SettingsItemV2(new FormSliderBar<float>
             {
-                Caption = "Menu scroll speed (right stick)",
+                Caption = "Menu scroll speed (other stick)",
                 HintText = "Wheel notches per second at full tilt.",
                 KeyboardStep = 0.5f,
                 Current = pad.ScrollSpeed.GetBoundCopy(),

@@ -92,7 +92,10 @@ public sealed partial class MainPage : Page
             {
                 rawMouse++;
                 if (rawLogs++ < 5) log($"raw mouse delta {e.MouseDelta.X},{e.MouseDelta.Y}");
-                if (Environment.TickCount64 - moveStamp < 500) return;
+                // In hybrid mode the console pointer is hidden and sends no move events, so the raw deltas are the only mouse movement and are always used.
+                // (Build 22 skipped them for 500 ms after any other movement, including the pad cursor and stick drift, which swallowed most mouse movement:
+                // the log showed 8761 raw deltas but only 1135 applied.) In the other modes they stay a fallback for when the pointer events are silent.
+                if (App.PointerMode != "hybrid" && Environment.TickCount64 - moveStamp < 500) return;
 
                 float scale = DisplayInformation.GetForCurrentView().LogicalDpi / 96f;
                 rawX = Math.Clamp(rawX + e.MouseDelta.X * bridge.RawMouseSensitivity / scale, 0, Panel.ActualWidth);
@@ -363,6 +366,10 @@ public sealed partial class MainPage : Page
         try
         {
             publishSize();
+
+            // The raw mouse position starts in the middle, like the pad cursor, so the first mouse movement does not jump to a corner.
+            rawX = Panel.ActualWidth / 2;
+            rawY = Panel.ActualHeight / 2;
 
             var dispatcher = Dispatcher;
             bridge.RunOnUiThread = action =>

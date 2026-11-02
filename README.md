@@ -17,7 +17,7 @@ An unofficial port bringing osu!lazer to Xbox Series X|S using UWP/GDK technolog
 
 <br>
 
-**The full game is running on Xbox Series S, with graphics and audio working. Mouse and pointer input, Xbox controller support and controller-based gameplay are almost complete.**
+**The full game is running on Xbox Series S, with graphics and audio working. Menus, the pointer, controller input and USB mouse support are in place and being polished.**
 
 </div>
 
@@ -73,9 +73,9 @@ The current focus is finishing input support and working towards beatmap and ski
 | Audio playback | 🟢 Working |
 | Xbox platform integration | 🟢 Working |
 | Framework adaptation | 🟢 Working |
-| Mouse and pointer input | 🟡 Almost complete |
-| Xbox controller support | 🟡 Almost complete |
-| Controller-based gameplay | 🟡 Almost complete |
+| Controller pointer and menus | 🟢 Working |
+| USB mouse | 🟡 Being verified on hardware |
+| Controller-based gameplay | 🟡 Playable, being polished |
 | Beatmap support | 🔴 Not started |
 | Skin support | 🔴 Not started |
 | Xbox Series X testing | 🟡 Not yet verified |
@@ -88,28 +88,40 @@ The current focus is finishing input support and working towards beatmap and ski
 
 ## 🎮 Current Focus: Input Support
 
-With the full game running on Xbox and graphics and audio operational, development is focused on completing input support.
+With the full game running on Xbox and graphics and audio operational, development is focused on input support.
 
-### Mouse and pointer
+### Controller pointer and menus
 
-Mouse and pointer input is almost complete. The remaining work focuses on making pointer behaviour consistent and reliable within osu!lazer.
+With a controller, the Xbox acts as a mouse-driven osu! machine:
 
-### Xbox controller
+| Input | Action |
+|---|---|
+| Left stick (default) | Move the cursor |
+| Right stick (default) | Scroll menus |
+| A | Left click |
+| Left trigger (held) | Precision mode, slows the cursor down |
+| Menu button | Pause while playing, back in menus (can be switched off) |
+| View button | Open the on-screen keyboard when a text box is active |
 
-Xbox controller support is almost complete.
+Open **Settings → Input → Gamepad (UWP)** to tune it:
 
-The goal is to provide reliable controller input throughout the game, including:
+- **Move pointer with right stick**: swaps the sticks, so the right stick moves the cursor and the left stick scrolls.
+- **Pointer speed**, **response curve** and **precision speed**.
+- **Menu button pauses**: also sends Escape, which pauses a beatmap and goes back in menus.
+- **Menu scroll speed** and **stick deadzone**.
 
-- Navigation through menus.
-- Selecting and confirming interface elements.
-- Navigating song selection.
-- Gameplay input.
-- Consistent input handling across the game.
+The settings are saved automatically.
 
-### Controller-based gameplay
+### USB mouse
 
-Controller-based gameplay is also almost complete, with the remaining work focused on polishing and completing the gameplay input experience.
+A USB mouse moves the cursor from its raw movement, and its buttons and wheel work as normal. Sensitivity is in **Settings → Input → Mouse (UWP)**. The pad and the mouse share one cursor, so switching between them continues from where the cursor is.
 
+Pointer mode is chosen with `pointer.txt` in the app's local folder (`hybrid` by default, also `pad` and `system`). Use `hybrid` for a USB mouse.
+
+### Still in progress
+
+- Polishing controller gameplay input and verifying USB mouse behaviour on hardware.
+- Beatmap and skin support.
 ## 🧪 Technical Development
 
 ### Graphics
@@ -128,7 +140,7 @@ The project targets Xbox Series X|S, with Series X testing still to be completed
 
 ### Input
 
-Mouse and pointer input, Xbox controller support and controller-based gameplay are almost complete.
+The controller pointer, menus and Menu-button pause work, and USB mouse support is being verified. Controller gameplay is playable and being polished.
 
 ### Beatmaps and skins
 
@@ -179,7 +191,9 @@ Once installed and configured, launch osu! Xbox from your Xbox Dev Mode environm
 - [x] Get graphics rendering working.
 - [x] Get audio playback working.
 - [x] Run the full game on Xbox Series S.
-- [ ] Finish mouse and pointer input.
+- [x] Controller pointer, menu navigation and pause.
+- [x] Choice of left or right stick for the pointer.
+- [ ] Finish USB mouse support.
 - [ ] Complete Xbox controller support.
 - [ ] Complete controller-based gameplay.
 - [ ] Add beatmap support.

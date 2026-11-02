@@ -17,7 +17,7 @@ An unofficial port bringing osu!lazer to Xbox Series X|S using UWP/GDK technolog
 
 <br>
 
-**The full game is running on Xbox Series S, with graphics and audio working. Mouse and pointer input is almost complete, and Xbox controller support is the next major goal.**
+**The full game is running on Xbox Series S, with graphics and audio working. Mouse and pointer input, Xbox controller support and controller-based gameplay are almost complete.**
 
 </div>
 
@@ -33,16 +33,18 @@ The full game is running on Xbox Series S, with graphics rendering and audio pla
 
 Xbox Series X is also a target platform, with compatibility testing still to be completed.
 
-The current focus is finishing mouse and pointer input and implementing full Xbox controller support.
+The current focus is finishing input support and working towards beatmap and skin support.
 
-> **Current milestone:** osu!lazer runs on Xbox Series S. Graphics and audio are working, mouse and pointer input is almost complete, and controller support is in development.
+> **Current milestone:** osu!lazer runs on Xbox Series S. Graphics and audio are working, and mouse, pointer and controller input are almost complete.
 
 ## ✨ Goals
 
-- 🎮 Implement full Xbox controller support.
-- 🖱️ Complete mouse and pointer input.
+- 🎮 Complete Xbox controller support.
+- 🖱️ Finish mouse and pointer input.
 - 🎵 Maintain reliable audio playback and timing.
 - 🎨 Keep graphics rendering working across Xbox hardware.
+- 🗺️ Add beatmap support.
+- 🎨 Add skin support.
 - ⚡ Improve performance and stability.
 - 🖥️ Make the interface comfortable to use on a television.
 - 🔧 Maintain compatibility with the adapted osu!framework.
@@ -72,19 +74,21 @@ The current focus is finishing mouse and pointer input and implementing full Xbo
 | Xbox platform integration | 🟢 Working |
 | Framework adaptation | 🟢 Working |
 | Mouse and pointer input | 🟡 Almost complete |
-| Xbox controller support | 🔴 In development |
-| Controller-based gameplay | 🔴 Not completed |
+| Xbox controller support | 🟡 Almost complete |
+| Controller-based gameplay | 🟡 Almost complete |
+| Beatmap support | 🔴 Not started |
+| Skin support | 🔴 Not started |
 | Xbox Series X testing | 🟡 Not yet verified |
 
 **Status key**
 
 - 🟢 Working
 - 🟡 Almost complete / in progress
-- 🔴 Not completed
+- 🔴 Not started / not completed
 
 ## 🎮 Current Focus: Input Support
 
-With the full game running on Xbox and graphics and audio operational, development is now focused on input support.
+With the full game running on Xbox and graphics and audio operational, development is focused on completing input support.
 
 ### Mouse and pointer
 
@@ -92,15 +96,19 @@ Mouse and pointer input is almost complete. The remaining work focuses on making
 
 ### Xbox controller
 
-The next major development goal is full Xbox controller integration.
+Xbox controller support is almost complete.
 
-The goal is to support:
+The goal is to provide reliable controller input throughout the game, including:
 
 - Navigation through menus.
 - Selecting and confirming interface elements.
 - Navigating song selection.
 - Gameplay input.
 - Consistent input handling across the game.
+
+### Controller-based gameplay
+
+Controller-based gameplay is also almost complete, with the remaining work focused on polishing and completing the gameplay input experience.
 
 ## 🧪 Technical Development
 
@@ -120,13 +128,47 @@ The project targets Xbox Series X|S, with Series X testing still to be completed
 
 ### Input
 
-Mouse and pointer input is almost complete. Controller support is the next major milestone, connecting Xbox controller input to osu!'s existing input and gameplay systems.
+Mouse and pointer input, Xbox controller support and controller-based gameplay are almost complete.
+
+### Beatmaps and skins
+
+Beatmap and skin support have not started yet. These are planned features for future development.
 
 ## 📦 Installation
 
-There are currently no public releases or installation packages.
+<badge color="warning">Coming soon</badge>
 
-Release and installation instructions will be added when a public build is ready.
+There is currently no public installation package. The download link below is a placeholder until the first release is available.
+
+**[Download osu! Xbox — Coming Soon](https://github.com/mareczek1113/osu-xbox/releases)**
+
+### Installation guide
+
+Once a release is available, follow these steps:
+
+**1. Set up Xbox Developer Mode**
+
+Enable Developer Mode on your Xbox Series X|S.
+
+Follow this tutorial for help:
+
+[Watch the Xbox Developer Mode setup tutorial](https://www.youtube.com/watch?v=ABdUwiBK1s0)
+
+**2. Download and install osu! Xbox**
+
+- Download the installation package from the releases page.
+- Upload the package through Xbox Device Portal.
+- Install the package on your Xbox.
+
+<text color="secondary" size="xs">The installation package and download link will be added when the first public release is ready.</text>
+
+**3. Change the UWP application type**
+
+Change the UWP application type from **App** to **Game** as required for the Xbox setup.
+
+**4. Launch osu! Xbox**
+
+Once installed and configured, launch osu! Xbox from your Xbox Dev Mode environment.
 
 ## 🗺️ Roadmap
 
@@ -137,11 +179,12 @@ Release and installation instructions will be added when a public build is ready
 - [x] Get graphics rendering working.
 - [x] Get audio playback working.
 - [x] Run the full game on Xbox Series S.
-- [ ] Complete mouse and pointer input.
+- [ ] Finish mouse and pointer input.
+- [ ] Complete Xbox controller support.
+- [ ] Complete controller-based gameplay.
+- [ ] Add beatmap support.
+- [ ] Add skin support.
 - [ ] Verify the build on Xbox Series X.
-- [ ] Complete Xbox controller integration.
-- [ ] Implement controller-based menu navigation.
-- [ ] Implement controller-based gameplay.
 - [ ] Polish input behaviour and user experience.
 - [ ] Test stability and performance.
 - [ ] Prepare a public release.

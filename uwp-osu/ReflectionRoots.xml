@@ -1,0 +1,11 @@
+<linker>
+  <!-- Types that osu.Game instantiates through Activator.CreateInstance(Type) (parameterless constructor lookup).
+       The first-run wizard stores its steps as List<Type>, so the trimmer cannot see the constructors being used. -->
+  <assembly fullname="osu.Game">
+    <type fullname="osu.Game.Overlays.FirstRunSetup.ScreenWelcome" preserve="all" />
+    <type fullname="osu.Game.Overlays.FirstRunSetup.ScreenUIScale" preserve="all" />
+    <type fullname="osu.Game.Overlays.FirstRunSetup.ScreenBeatmaps" preserve="all" />
+    <type fullname="osu.Game.Overlays.FirstRunSetup.ScreenImportFromStable" preserve="all" />
+    <type fullname="osu.Game.Overlays.FirstRunSetup.ScreenBehaviour" preserve="all" />
+  </assembly>
+</linker>

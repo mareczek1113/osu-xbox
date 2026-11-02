@@ -1,0 +1,8 @@
+<linker>
+  <!-- The renderer builds the D3D11 input layout by reflecting over a vertex struct's fields and [VertexMember]
+       attributes, so osu.Game's own vertex structs must keep their field metadata under Native AOT. -->
+  <assembly fullname="osu.Game">
+    <type fullname="osu.Game.Graphics.OpenGL.Vertices.PositionAndColourVertex" preserve="all" />
+    <type fullname="osu.Game.Graphics.Sprites.LogoAnimation/LogoAnimationDrawNode/LogoAnimationVertex" preserve="all" />
+  </assembly>
+</linker>

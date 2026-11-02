@@ -1,0 +1,9 @@
+<linker>
+  <!-- Storyboard commands call TransformTo(nameof(d.VectorScale / FlipH / FlipV)) with an unannotated generic TDrawable,
+       so TransformCustom.findAccessor (reflection) cannot see which drawable types need those members kept. -->
+  <assembly fullname="osu.Game">
+    <type fullname="osu.Game.Storyboards.Drawables.DrawableStoryboardSprite" preserve="all" />
+    <type fullname="osu.Game.Storyboards.Drawables.DrawableStoryboardAnimation" preserve="all" />
+    <type fullname="osu.Game.Storyboards.Drawables.DrawableStoryboardVideo/DrawableVideo" preserve="all" />
+  </assembly>
+</linker>

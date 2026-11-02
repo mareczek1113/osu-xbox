@@ -1,0 +1,22 @@
+# Whitelist: ignore everything at the top level except the files that make up the port.
+/*
+!/.gitignore
+!/README.md
+!/uwp-osu/
+!/osu-aot/
+!/package-uwp.ps1
+!/patch_*.ps1
+!/gen_*.ps1
+!/run-build22.ps1
+
+# Build output and packages, wherever they appear
+bin/
+obj/
+out/
+layout/
+*.appx
+*.msix
+*.cer
+*.pfx
+*.log
+*.out.txt

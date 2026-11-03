@@ -1,4 +1,4 @@
-<div align="center">
+ <div align="center">
 
 <img src="https://github.com/ppy/osu/blob/master/assets/lazer.png" width="100" alt="osu! logo">
 
@@ -69,6 +69,7 @@ LocalAppData
 └── osu! Xbox
     └── LocalState
         └── status.txt
+```
 
 ## **Technology**
 
@@ -238,3 +239,4 @@ LocalAppData
 └── osu! Xbox
     └── LocalState
         └── Import
+```

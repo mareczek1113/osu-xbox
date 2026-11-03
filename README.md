@@ -41,18 +41,6 @@ Beatmap and skin importing are working through Xbox Device Portal.
 
 **Current milestone:** The first public release is available. osu!lazer runs on Xbox Series S with graphics, audio, controller input, beatmap importing and skin importing working.
 
-## **Goals**
-
-- Polish Xbox controller support.
-- Maintain reliable audio playback and timing.
-- Keep graphics rendering working across Xbox hardware.
-- Support beatmap importing.
-- Support skin importing.
-- Improve performance and stability.
-- Make the interface comfortable to use on a television.
-- Maintain compatibility with the adapted osu!framework.
-- Preserve the core osu!lazer gameplay experience.
-
 ## **Technology**
 
 | Component | Technology |

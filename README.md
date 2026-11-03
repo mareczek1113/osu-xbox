@@ -33,17 +33,17 @@ The full game is running on Xbox Series S, with graphics rendering and audio pla
 
 Xbox Series X is also a target platform, with compatibility testing still to be completed.
 
-The current focus is polishing controller input and working towards beatmap and skin support.
+Beatmap and skin importing are working through Xbox Device Portal.
 
-> **Current milestone:** osu!lazer runs on Xbox Series S. Graphics, audio, controller pointer navigation, menus and controller-based gameplay are working.
+> **Current milestone:** osu!lazer runs on Xbox Series S. Graphics, audio, controller pointer navigation, menus, controller-based gameplay, beatmap importing and skin importing are working.
 
 ## ✨ Goals
 
 - 🎮 Polish Xbox controller support.
 - 🎵 Maintain reliable audio playback and timing.
 - 🎨 Keep graphics rendering working across Xbox hardware.
-- 🗺️ Add beatmap support.
-- 🎨 Add skin support.
+- 🗺️ Support beatmap importing.
+- 🎨 Support skin importing.
 - ⚡ Improve performance and stability.
 - 🖥️ Make the interface comfortable to use on a television.
 - 🔧 Maintain compatibility with the adapted osu!framework.
@@ -73,9 +73,9 @@ The current focus is polishing controller input and working towards beatmap and 
 | Xbox platform integration | 🟢 Working |
 | Framework adaptation | 🟢 Working |
 | Controller pointer and menus | 🟢 Working |
-| Controller-based gameplay | 🟡 Almost complete |
-| Beatmap support | 🔴 Not started |
-| Skin support | 🔴 Not started |
+| Controller-based gameplay | 🟢 Working |
+| Beatmap importing | 🟢 Working |
+| Skin importing | 🟢 Working |
 | Xbox Series X testing | 🟡 Not yet verified |
 
 **Status key**
@@ -120,7 +120,7 @@ For now, controller input is the primary way to navigate and play osu! Xbox.
 
 ### Controller-based gameplay
 
-Controller-based gameplay is almost complete. The remaining work focuses on polishing input behaviour and ensuring a consistent gameplay experience.
+Controller-based gameplay is working. The remaining work focuses on polishing input behaviour and ensuring a consistent gameplay experience.
 
 ## 🧪 Technical Development
 
@@ -146,7 +146,14 @@ Native mouse support is not currently implemented because of the limitations of 
 
 ### Beatmaps and skins
 
-Beatmap and skin support have not started yet. These are planned features for future development.
+Beatmaps and skins can be imported through Xbox Device Portal.
+
+Supported import file types:
+
+- `.osz` — Beatmap packages.
+- `.osk` — Skin packages.
+
+See the installation and importing guides below for instructions.
 
 ## 📦 Installation
 
@@ -171,7 +178,8 @@ Follow this tutorial for help:
 **2. Download and install osu! Xbox**
 
 - Download the installation package from the releases page.
-- Upload the package through Xbox Device Portal.
+- Open Xbox Device Portal in a browser on your PC.
+- Upload the installation package through Xbox Device Portal.
 - Install the package on your Xbox.
 
 <text color="secondary" size="xs">The installation package and download link will be added when the first public release is ready.</text>
@@ -184,6 +192,56 @@ Make sure the UWP application is configured correctly for Xbox deployment.
 
 Once installed and configured, launch osu! Xbox from your Xbox Developer Mode environment.
 
+## 🗺️ Importing Beatmaps and Skins
+
+You can import your own beatmaps and skins using Xbox Device Portal without needing to connect a USB drive.
+
+### 1. Open Xbox Device Portal
+
+- Make sure your Xbox is running in Developer Mode.
+- Open Xbox Device Portal on your PC.
+- Connect to your Xbox.
+
+### 2. Open the game's Local State folder
+
+In Xbox Device Portal:
+
+1. Open **File Explorer**.
+2. Navigate to **LocalAppData**.
+3. Find and open **osu! Xbox**.
+4. Open **LocalState**.
+5. Open the **Import** folder.
+
+The folder path is:
+
+```text
+LocalAppData
+└── osu! Xbox
+    └── LocalState
+        └── Import
+```
+
+### 3. Upload your beatmaps or skins
+
+Upload your files directly into the `Import` folder.
+
+| File extension | Content |
+|---|---|
+| `.osz` | Beatmap packages |
+| `.osk` | Skin packages |
+
+**Beatmaps:** Upload your `.osz` files.
+
+**Skins:** Upload your `.osk` files.
+
+### 4. Import into osu! Xbox
+
+After uploading your files, open osu! Xbox and allow the game to process the imported content.
+
+Your imported beatmaps and skins should then be available in the game.
+
+<text color="secondary" size="xs">Make sure you upload the original `.osz` or `.osk` package files rather than extracting them first.</text>
+
 ## 🗺️ Roadmap
 
 - [x] Create the project repository.
@@ -195,9 +253,9 @@ Once installed and configured, launch osu! Xbox from your Xbox Developer Mode en
 - [x] Run the full game on Xbox Series S.
 - [x] Controller pointer and menu navigation.
 - [x] Choice of left or right stick for the pointer.
-- [ ] Polish controller-based gameplay.
-- [ ] Add beatmap support.
-- [ ] Add skin support.
+- [x] Controller-based gameplay.
+- [x] Beatmap importing.
+- [x] Skin importing.
 - [ ] Verify the build on Xbox Series X.
 - [ ] Polish input behaviour and user experience.
 - [ ] Test stability and performance.

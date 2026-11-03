@@ -24,9 +24,9 @@ public sealed partial class MainPage : Page
     private bool started;
     private int pointerLogs;
     private int pressLogs;
-    private long panelMoves, panelPresses, coreMoves, corePresses, panelStamp, keyCount, rawMouse, rawFallback, moveStamp;
+    private long panelMoves, panelPresses, coreMoves, corePresses, panelStamp, keyCount, moveStamp;
     private double rawX, rawY;
-    private int rawLogs;
+    private System.Threading.Timer? watchdog;
 
     public MainPage()
     {
@@ -71,6 +71,7 @@ public sealed partial class MainPage : Page
         {
             var p = e.GetCurrentPoint(Panel).Position;
             panelMoves++;
+            if (App.PointerMode == "hybrid") return; // hybrid: the pad drives the cursor; the console's stick-driven system pointer must not move it
             panelStamp = Environment.TickCount64;
             moveStamp = panelStamp;
             rawX = p.X;
@@ -82,40 +83,39 @@ public sealed partial class MainPage : Page
         Panel.PointerPressed += (_, e) => { panelPresses++; panelStamp = Environment.TickCount64; logPress("panel", e.Pointer.PointerDeviceType.ToString(), e.GetCurrentPoint(Panel).Properties.PointerUpdateKind); var pt = e.GetCurrentPoint(Panel); postButton(pt.Position, pt.Properties.PointerUpdateKind, true); };
         Panel.PointerReleased += (_, e) => { var pt = e.GetCurrentPoint(Panel); postButton(pt.Position, pt.Properties.PointerUpdateKind, false); };
 
-        // Diagnostics + fallback: if the XAML panel gets no pointer events (hit testing / Xbox pointer mode), the CoreWindow may still get them.
-        // They are only forwarded when the panel has been silent for a moment, so nothing is posted twice.
-        // Raw mouse deltas: if a physical mouse only shows up here (no pointer events), integrate the deltas into a cursor position.
-        // Only used when no pointer move event arrived for a moment, so the pad-driven system pointer is not affected.
-        try
-        {
-            Windows.Devices.Input.MouseDevice.GetForCurrentView().MouseMoved += (_, e) =>
-            {
-                rawMouse++;
-                if (rawLogs++ < 5) log($"raw mouse delta {e.MouseDelta.X},{e.MouseDelta.Y}");
-                // In hybrid mode the console pointer is hidden and sends no move events, so the raw deltas are the only mouse movement and are always used.
-                // (Build 22 skipped them for 500 ms after any other movement, including the pad cursor and stick drift, which swallowed most mouse movement:
-                // the log showed 8761 raw deltas but only 1135 applied.) In the other modes they stay a fallback for when the pointer events are silent.
-                if (App.PointerMode != "hybrid" && Environment.TickCount64 - moveStamp < 500) return;
-
-                float scale = DisplayInformation.GetForCurrentView().LogicalDpi / 96f;
-                rawX = Math.Clamp(rawX + e.MouseDelta.X * bridge.RawMouseSensitivity / scale, 0, Panel.ActualWidth);
-                rawY = Math.Clamp(rawY + e.MouseDelta.Y * bridge.RawMouseSensitivity / scale, 0, Panel.ActualHeight);
-                rawFallback++;
-                bridge.PostPointerMove((float)rawX, (float)rawY);
-            };
-        }
-        catch (Exception ex) { log("raw mouse unavailable: " + ex.Message); }
+        // A physical USB mouse is not supported: Xbox only delivers hardware mouse input to UWP apps Microsoft has allowed individually.
+        // (The console turns the left stick into mouse-like events, so no mouse code runs here at all; the pad handler drives the cursor.)
         var coreWin = Window.Current.CoreWindow;
 
-        // Hiding the system pointer (PointerCursor = null) stops its move events on Xbox (build 16: moves 0) but presses and raw mouse movement
-        // still arrive, so in "hybrid" mode the raw deltas below drive the osu! cursor.
-        if (App.PointerMode == "hybrid")
+        // Hiding the system pointer (PointerCursor = null) stops its move events on Xbox (build 16: moves 0) but presses (A) still arrive,
+        // so in "hybrid" mode the pad handler drives the osu! cursor and the console pointer is only used for clicks.
+        // The console re-shows its pointer when something resets the window cursor (focus changes, the swap chain being replaced,
+        // the first pointer event after launch), so the cursor is hidden again on every such event, not just once at startup.
+        int cursorResets = 0;
+        void hideSystemPointer()
         {
-            try { coreWin.PointerCursor = null; } catch (Exception ex) { log("hide system pointer failed: " + ex.Message); }
+            if (App.PointerMode != "hybrid") return;
+            try
+            {
+                var cw = Window.Current.CoreWindow;
+                if (cw.PointerCursor != null)
+                {
+                    cw.PointerCursor = null;
+                    if (++cursorResets <= 20) log("system pointer was visible, hidden again (" + cursorResets + ")");
+                }
+            }
+            catch (Exception ex) { log("hide system pointer failed: " + ex.Message); }
         }
+        hideSystemPointer();
+        Loaded += (_, _) => hideSystemPointer();
+        Window.Current.Activated += (_, _) => hideSystemPointer();
+        Window.Current.VisibilityChanged += (_, _) => hideSystemPointer();
+        coreWin.PointerEntered += (_, _) => hideSystemPointer();
         coreWin.PointerMoved += (_, e) =>
         {
+            hideSystemPointer();
             coreMoves++;
+            if (App.PointerMode == "hybrid") return; // see Panel.PointerMoved
             moveStamp = Environment.TickCount64;
             rawX = e.CurrentPoint.Position.X;
             rawY = e.CurrentPoint.Position.Y;
@@ -413,9 +413,29 @@ public sealed partial class MainPage : Page
             memoryTimer.Tick += (_, _) =>
         {
             logMemory("tick");
-            log($"input counts: panel moves {panelMoves}, panel presses {panelPresses}, core moves {coreMoves}, core presses {corePresses}, keys {keyCount}, raw mouse {rawMouse}, raw fallback {rawFallback}");
+            log($"input counts: panel moves {panelMoves}, panel presses {panelPresses}, core moves {coreMoves}, core presses {corePresses}, keys {keyCount}");
+            log($"gc: gen0 {GC.CollectionCount(0)}, gen1 {GC.CollectionCount(1)}, gen2 {GC.CollectionCount(2)}, total pause {GC.GetTotalPauseDuration().TotalMilliseconds:0} ms, heap {mb((ulong)GC.GetTotalMemory(false))} MB");
         };
             memoryTimer.Start();
+
+            // Fewer, shorter blocking collections: gen2 pauses on a big heap are a likely cause of rare freezes.
+            try { System.Runtime.GCSettings.LatencyMode = System.Runtime.GCLatencyMode.SustainedLowLatency; }
+            catch (Exception ex) { log("gc latency mode failed: " + ex.Message); }
+
+            // Hang watchdog on a thread-pool thread (independent of the UI and game threads): logs when no frame was presented for a while.
+            long lastReported = 0;
+            watchdog = new System.Threading.Timer(_ =>
+            {
+                long last = Volatile.Read(ref Veldrid.D3D11.UwpDiagnostics.LastPresentTick);
+                if (last == 0) return;
+
+                long gap = Environment.TickCount64 - last;
+                if (gap > 700 && last != lastReported)
+                {
+                    lastReported = last;
+                    log($"stall: no frame presented for {gap} ms (gc gen2 {GC.CollectionCount(2)}, pause {GC.GetTotalPauseDuration().TotalMilliseconds:0} ms)");
+                }
+            }, null, 500, 500);
         }
         catch (Exception e)
         {

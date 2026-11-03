@@ -9,8 +9,8 @@ sealed partial class App : Application
     /// <summary>
     /// How the osu! cursor is driven, from pointer.txt in the app's local folder (written with "hybrid" on first run):
     /// <list type="bullet">
-    /// <item><b>hybrid</b>: the console pointer stays on but is hidden. The pad moves the cursor itself (left stick, A = click) and a USB mouse moves it from raw mouse movement.</item>
-    /// <item><b>pad</b>: the console pointer is off, only the pad drives the cursor. A USB mouse does not work in this mode.</item>
+    /// <item><b>hybrid</b>: the console pointer stays on but is hidden. The pad moves the cursor itself (left stick, A = click).</item>
+    /// <item><b>pad</b>: the console pointer is off, only the pad drives the cursor.</item>
     /// <item><b>system</b>: the console's own pointer (left stick + A) is used, shown on top of osu!'s cursor.</item>
     /// </list>
     /// </summary>
@@ -39,7 +39,7 @@ sealed partial class App : Application
             // Keep the default.
         }
 
-        // Only "pad" switches the console's pointer off; with it off the console also stops delivering USB mouse input.
+        // Only "pad" switches the console's pointer off.
         RequiresPointerMode = PointerMode == "pad" ? ApplicationRequiresPointerMode.WhenRequested : ApplicationRequiresPointerMode.Auto;
     }
 

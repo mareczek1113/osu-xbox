@@ -51,6 +51,18 @@ public partial class XboxPadSettings : InputSubsection
                 HintText = "Also sends Escape, which pauses while playing a beatmap and goes back in menus.",
                 Current = pad.MenuButtonPauses.GetBoundCopy(),
             }),
+            new SettingsItemV2(new FormCheckBox
+            {
+                Caption = "B goes back",
+                HintText = "Also sends Escape: back in menus, pause while playing.",
+                Current = pad.BackOnB.GetBoundCopy(),
+            }),
+            new SettingsItemV2(new FormCheckBox
+            {
+                Caption = "Bumpers press Z / X",
+                HintText = "Left bumper = Z, right bumper = X (the osu!standard tap keys). A also clicks. Y is right click.",
+                Current = pad.TapKeysOnShoulders.GetBoundCopy(),
+            }),
             new SettingsItemV2(new FormSliderBar<float>
             {
                 Caption = "Menu scroll speed (other stick)",

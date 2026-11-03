@@ -41,6 +41,35 @@ Beatmap and skin importing are working through Xbox Device Portal.
 
 **Current milestone:** The first public release is available. osu!lazer runs on Xbox Series S with graphics, audio, controller input, beatmap importing and skin importing working.
 
+## **Testing and Bug Reports**
+
+Testing is now greatly appreciated!
+
+The first public release is available, and feedback from Xbox users is really important to help improve osu! Xbox.
+
+If you use the app, please help test it and look out for:
+
+- Bugs and unexpected behaviour.
+- Performance issues, including lag or stuttering.
+- Audio or graphics problems.
+- Controller input issues.
+- Problems importing beatmaps or skins.
+- Crashes or other stability issues.
+
+**Found a bug or performance issue?**
+
+Please create a [GitHub Issue](https://github.com/mareczek1113/osu-xbox/issues) and include as much information as possible.
+
+**Important: Please attach your `status.txt` file to the issue.**
+
+You can find it in the game's `LocalState` folder through Xbox Device Portal:
+
+```text
+LocalAppData
+└── osu! Xbox
+    └── LocalState
+        └── status.txt
+
 ## **Technology**
 
 | Component | Technology |
